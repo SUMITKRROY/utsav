@@ -41,6 +41,10 @@ dependencies:
   fancy_bottom_navigation: ^0.3.3
   flutter_bloc: ^8.1.2
   dio: ^5.1.1
+  intl: ^0.18.1
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:

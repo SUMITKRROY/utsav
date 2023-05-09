@@ -24,10 +24,6 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
           if (kDebugMode) {
             print('auth value>>>${Utils.categoriesList}');
           }
-        } else {
-          if (kDebugMode) {
-            print('data not found');
-          }
         }
       }on DioError catch(e) {
         if (kDebugMode) {

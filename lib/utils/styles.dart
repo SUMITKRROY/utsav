@@ -65,5 +65,92 @@ class Styles {
       decoration: Styles.messageFieldCardStyle(),
     );
   }
+  static const H1Headings = TextStyle(
+      fontFamily: 'SourceSansPro',
+      fontSize: 18,
+      color: AppColors.Textcolorheadingblack,
+      fontWeight: FontWeight.w600);
+  static const SkUStyle = TextStyle(
+    fontFamily: 'SourceSansPro',
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.Textcolorgreay,
+    // decoration: TextDecoration.lineThrough,
+  );
+  static const headingStyle = TextStyle(
+      fontFamily: 'NotoSans',
+      fontSize: 20,
+      color: Colors.black,
+      fontWeight: FontWeight.bold);
+  static const chipstextStyle =  TextStyle(
+      fontFamily: 'SourceSansPro',
+      fontSize: 14,
+      color: Colors.black,
+      fontWeight: FontWeight.w400);
 
+
+  static const Readmore = TextStyle(
+    fontFamily: 'SourceSansPro',
+    color: Colors.blue,
+    fontWeight: FontWeight.w400,
+    fontSize: 15,
+  );
+  static const prizeStyle3 = TextStyle(
+    color:
+    AppColors.pricecolor,
+    fontSize: 16,
+    fontFamily:
+    "SourceSansPro",
+    fontWeight:
+    FontWeight.w600,
+  );
+  static const FreeStyle = TextStyle(
+    color:
+    AppColors.pricecolor,
+    fontSize: 15,
+    fontFamily:
+    "SourceSansPro",
+    fontWeight:
+    FontWeight.w600,
+  );
+  static const prizeStyle5 = TextStyle(
+    fontFamily:
+    'SourceSansPro',
+    fontSize: 14,
+    fontWeight:
+    FontWeight.w400,
+    color: AppColors.Textcolorgreay,
+    decoration: TextDecoration
+        .lineThrough,
+  );
+  static const offprizeStyle = TextStyle(
+    color: AppColors.pricecolor,
+    fontSize: 14,
+    fontFamily: "SourceSansPro",
+    fontWeight: FontWeight.w400,
+  );
+  static const inculedingStyle = TextStyle(
+    color: Colors.grey,
+    fontFamily: 'SourceSansPro',
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    // decoration: TextDecoration.lineThrough,
+  );
+  static const decStyle = TextStyle(
+      fontFamily: 'SourceSansPro',
+      fontSize: 15,
+      color: AppColors.Textcolorheadingblack,
+      fontWeight: FontWeight.w400);
+
+  static const dropdownin = TextStyle(
+      fontFamily: 'SourceSansPro',
+      fontSize: 16,
+      color: Colors.black,
+      fontWeight:
+      FontWeight.w600);
+  static const H1Headings15 = TextStyle(
+      fontFamily: 'SourceSansPro',
+      fontSize: 15,
+      color: AppColors.Textcolorheadingblack,
+      fontWeight: FontWeight.w600);
 }

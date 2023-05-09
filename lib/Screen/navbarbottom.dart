@@ -1,11 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:utsav/Screen/mixlandingpage/bloc/mix_landing_page_bloc.dart';
 import 'package:utsav/utils/app_color.dart';
 import 'package:utsav/utils/widgets.dart';
 
 import '../utils/Utils.dart';
 import '../utils/styles.dart';
 import 'HomePage.dart';
+import 'mixlandingpage/bloc/data/posts_service.dart';
+import 'mixlandingpage/mixlandingpage.dart';
 
 class dashboardScreen extends StatefulWidget {
   const dashboardScreen({Key? key}) : super(key: key);
@@ -15,13 +19,14 @@ class dashboardScreen extends StatefulWidget {
 }
 
 class _dashboardScreenState extends State<dashboardScreen> {
+
   int pageIndex = 0;
   bool open = false;
   int _selectedIndex = 0;
-
+ PostsService repository =PostsService();
   final ScreenList = [
     const HomePage(),
-    const Page2(),
+     mixlandingpage( ),
     const Page3(),
     const Page4(),
   ];
@@ -37,7 +42,9 @@ class _dashboardScreenState extends State<dashboardScreen> {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     var size = MediaQuery.of(context).size;
-    return Scaffold(
+    return BlocProvider(
+  create: (context) => MixLandingPageBloc(repository),
+  child: Scaffold(
       backgroundColor: const Color(0xffC4DFCB),
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
@@ -149,7 +156,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 
   @override
@@ -361,12 +369,12 @@ class _firstdrawerState extends State<firstdrawer> {
                                 vertical: 0.0, horizontal: 15.0),
                             dense: true,
                             onTap: () {
-                              Utils.indexname =
-                                  Utils.FilteredData[index]['name'].toString();
-                              // Utils.Position = Utils.FilteredData[index]['name'].toString();
+                              Utils.indexname = Utils.FilteredData[index]['name'].toString();
+                               Utils.Position = Utils.FilteredData[index]['position'].toString();
 
                               if (kDebugMode) {
-                                print(Utils.indexname);
+                               // print(Utils.indexname);
+                                print(Utils.Position);
                               }
                               Utils.submenu.clear();
                               Utils.submenu.addAll(
@@ -791,8 +799,7 @@ class _firstdrawerState extends State<firstdrawer> {
                             .length,
                     child: ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: Utils
-                          .categoriesList['children_data'][13]['children_data']
+                      itemCount: Utils.categoriesList['children_data'][13]['children_data']
                           .length,
                       // scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
@@ -807,9 +814,7 @@ class _firstdrawerState extends State<firstdrawer> {
 
                               child: InkWell(
                                 onTap: () {
-                                  Utils.indexname = Utils.categoriesList[index]
-                                          ['name']
-                                      .toString();
+                                  Utils.indexname = Utils.categoriesList[index]['name'].toString();
                                   Scaffold.of(context).openDrawer();
                                 },
                                 child: Text(
@@ -872,8 +877,7 @@ class _SecondDrawerState extends State<SecondDrawer> {
                       padding: const EdgeInsets.only(left: 10.0),
                       child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(
-                            Utils.indexname,
+                          child: Text(Utils.indexname,
                             style: const TextStyle(
                                 fontFamily: 'NotoSans',
                                 fontSize: 16,
@@ -982,8 +986,7 @@ class _SecondDrawerState extends State<SecondDrawer> {
                                   //attention
                                   initiallyExpanded: idx == selected,
                                   //attention
-                                  title: Text(
-                                    Utils.submenu[idx]['name'],
+                                  title: Text(Utils.submenu[idx]['name'],
                                     style: Styles.SidemenuTextStyle,
                                   ),
                                   onExpansionChanged: ((newState) {
@@ -1075,7 +1078,13 @@ class _SecondDrawerState extends State<SecondDrawer> {
                                                                     )));
                                                       }
                                                     },*/
-                                          onTap:(){},
+                                          onTap:(){
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                     mixlandingpage()));
+                                          },
                                                     // trailing: FTextStyle.arrowButtonforward,
                                                     title: Text(
                                                       Utils.submenu[idx]['children_data'][ind]['name'],

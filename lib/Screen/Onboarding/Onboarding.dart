@@ -2,12 +2,18 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:utsav/Screen/welcome.dart';
 
 import '../../utils/AppUrl.dart';
 import '../../utils/Utils.dart';
 import '../../utils/app_color.dart';
+import '../mixlandingpage/bloc/data/posts_service.dart';
+import '../mixlandingpage/bloc/mix_landing_page_bloc.dart';
 import 'bloc/category/categories_bloc.dart';
+import 'package:intl/intl.dart';
+import 'dart:ui' as ui;
 
 
 class Onboarding extends StatefulWidget {
@@ -18,13 +24,80 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> {
+  var dio = Dio();
+  var latitude;
+  var longitude;
+
+
 
   @override
   void initState() {
     countryList();
+    getLocation();
     super.initState();
   }
+  getLocation() async {
+    // _getUserLocation();
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    Position position = await Geolocator.getCurrentPosition();
 
+    latitude = position.latitude;
+    longitude = position.longitude;
+
+    _getAddress();
+  }
+
+  String getCurrency(countryName) {
+    var format = NumberFormat.simpleCurrency(
+      locale: countryName,
+    );
+
+    if (kDebugMode) {
+      print("CURRENCY SYMBOL ${format.currencySymbol}");
+    } // $
+    if (kDebugMode) {
+      print("CURRENCY NAME ${format.currencyName}");
+    }
+    Utils.currencyName = format.currencyName!;
+    Utils.currencySymbol = format.currencySymbol;
+    return format.currencySymbol;
+  }
+
+  Locale myLocale = ui.window.locale;
+  _getAddress() async {
+    try {
+      List<Placemark> p = await placemarkFromCoordinates(latitude, longitude);
+      Placemark place = p[0];
+
+      var currentAddress =
+          "${place.name}, ${place.locality}, ${place.postalCode}, ${place.country}";
+      var currentAdd = currentAddress;
+      Utils.loaction = place.country!;
+      var isoCountryCode = place.isoCountryCode!;
+
+      var localscode = "${myLocale.languageCode}_$isoCountryCode";
+      getCurrency(localscode);
+      // currency(Utils.loaction,isoCountryCode);
+
+    } catch (e) {}
+  }
 
 
 
@@ -41,6 +114,7 @@ class _OnboardingState extends State<Onboarding> {
             body: MultiBlocProvider(
                 providers: [
                   BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
+
                 ],
                 child: BlocProvider(
                   create: (context) => CategoriesBloc()..add(LoadUserEvent()),
