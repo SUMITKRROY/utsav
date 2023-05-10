@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:utsav/Screen/Login/Login_Screen.dart';
 import 'dart:developer';
 
 import '../utils/Utils.dart';
@@ -191,7 +192,9 @@ class _welcomeState extends State<welcome> {
                                 image: AssetImage('assets/Shape.png'),
                               ),
                               iconSize: 25,
-                              onPressed: () {},
+                              onPressed: () {
+
+                              },
                             ),
                           ),
                           const Padding(
@@ -210,11 +213,12 @@ class _welcomeState extends State<welcome> {
                     ),
                     onTap: () {
                       Utils.checkLogin=true;
-                    /*  Navigator.push(
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const loginScreen()));*/
-                      // (Route<dynamic> route) => false);
+                              builder: (context) =>
+                              const LoginScreen()));
+                       //(Route<dynamic> route) => true);
                     }),
                 SizedBox(
                   height: height * 0.010,
@@ -228,7 +232,7 @@ class _welcomeState extends State<welcome> {
                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const dashboardScreen()),
+                              builder: (context) => const dashboardScreen(selectedIndex: 0,)),
                               (Route<dynamic> route) => false
                       );
                       // (Route<dynamic> route) => false);

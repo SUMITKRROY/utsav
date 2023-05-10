@@ -12,7 +12,7 @@ import 'mixlandingpage/bloc/data/posts_service.dart';
 import 'mixlandingpage/mixlandingpage.dart';
 
 class dashboardScreen extends StatefulWidget {
-  const dashboardScreen({Key? key}) : super(key: key);
+  const dashboardScreen({Key? key, required int selectedIndex}) : super(key: key);
 
   @override
   _dashboardScreenState createState() => _dashboardScreenState();
@@ -167,26 +167,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
   }
 }
 
-class Page2 extends StatelessWidget {
-  const Page2({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xffC4DFCB),
-      child: Center(
-        child: Text(
-          "Page Number 2",
-          style: TextStyle(
-            color: Colors.green[900],
-            fontSize: 45,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class Page3 extends StatelessWidget {
   const Page3({Key? key}) : super(key: key);
@@ -1085,7 +1066,7 @@ class _SecondDrawerState extends State<SecondDrawer> {
                                                     builder: (context) =>
                                                      mixlandingpage()));
                                           },
-                                                    // trailing: FTextStyle.arrowButtonforward,
+                                                    // trailing: Styles.arrowButtonforward,
                                                     title: Text(
                                                       Utils.submenu[idx]['children_data'][ind]['name'],
                                                       // menu[index]['Menu']['submenu'],

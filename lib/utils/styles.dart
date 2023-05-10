@@ -153,4 +153,25 @@ class Styles {
       fontSize: 15,
       color: AppColors.Textcolorheadingblack,
       fontWeight: FontWeight.w600);
+
+
+  static const formfieldHeadingText = TextStyle(
+      fontFamily: 'SourceSansPro',
+      fontSize: 14,
+      color: AppColors.Textcolorheadingblack,
+      fontWeight: FontWeight.w600
+  );
+  static const formfieldHeadingText16 = TextStyle(
+      fontFamily: 'SourceSansPro',
+      fontSize: 16,
+      color: AppColors.Textcolorheading,
+      fontWeight: FontWeight.w600);
+  static const formfieldhintStyle = TextStyle(
+      fontFamily: 'SourceSansPro',
+      fontSize: 16,
+      // color: AppColors.Textcolorheadingblack,
+      color:Colors.grey,
+      fontWeight: FontWeight.w400
+    // fontWeight: FontWeight.bold
+  );
 }

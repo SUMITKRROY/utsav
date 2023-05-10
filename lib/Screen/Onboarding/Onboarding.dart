@@ -122,7 +122,8 @@ class _OnboardingState extends State<Onboarding> {
                       builder: (context, state) {
                     if (state is CategoriesLoadingState) {
                       return _loadingIndicator();
-                    } else if (state is CategoriesLoadedState) {
+                    }
+                    else if (state is CategoriesLoadedState) {
                       return Padding(
                         padding: const EdgeInsets.all(10),
                         child: ListView(
@@ -251,7 +252,10 @@ class _OnboardingState extends State<Onboarding> {
                         ),
                       );
                     }
-                    return Text('Date Not Found');
+                    else if(state is CategoriesErrorState){
+                      return Text('Connection not found');
+                    }
+                return Container();
                   }),
                 )
 
