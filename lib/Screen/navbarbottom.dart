@@ -1,13 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:utsav/Screen/mixlandingpage/bloc/mix_landing_page_bloc.dart';
 import 'package:utsav/utils/app_color.dart';
 import 'package:utsav/utils/widgets.dart';
 
 import '../utils/Utils.dart';
 import '../utils/styles.dart';
+import '../znot uses/new file.dart';
 import 'HomePage.dart';
+import 'Login/Login_Screen.dart';
 import 'mixlandingpage/bloc/data/posts_service.dart';
 import 'mixlandingpage/mixlandingpage.dart';
 
@@ -244,55 +247,107 @@ class _firstdrawerState extends State<firstdrawer> {
                     ),
                   ),
                   const SizedBox(width: 20),
-                  (Utils.checkLogin == true)
-                      ? Container(
+                  if (Utils.checkLogin == true) Container(
                           // color: Colors.cyan,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children:  [
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                "Umair Siddiqui",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontFamily: 'NotoSans',
-                                    fontSize: 14,
-                                    color: AppColors.Textcolorheading,
-                                    fontWeight: FontWeight.w700),
+                            InkWell(
+                              onTap: () => showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>   AlertDialog(
+                                  backgroundColor: Colors.transparent,
+                                  content: SingleChildScrollView(
+                                    child: ListBody(
+                                      children: const <Widget>[
+                                        Text('Are you sure you want to log out?',style: TextStyle(color: Colors.white),),
+                                      ],
+                                    ),
+                                  ),
+                                  actions:  <Widget>[
+                                    TextButton(
+                                      child: const Text('Cancel'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('Log out'),
+                                      onPressed: () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Text(
-                                "de-umair@mobiloitte.com",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontFamily: 'NotoSans',
-                                    fontSize: 12,
-                                    color: AppColors.textgreyordersummaary,
-                                    fontWeight: FontWeight.w400),
+
+                              child: FutureBuilder<SharedPreferences>(
+                                future: SharedPreferences.getInstance(),
+                                builder: (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
+                                  SharedPreferences prefs = snapshot.data!;
+                                  String firstName = prefs.getString('firstName') ?? '';
+                                  String lastName = prefs.getString('lastName') ?? '';
+                                  String email = prefs.getString('email') ?? '';
+                                  return Column(
+                                    children: [
+                                      Text(
+                                        '${firstName} ${lastName}',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontFamily: 'NotoSans',
+                                            fontSize: 14,
+                                            color: AppColors.Textcolorheading,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      Text(
+                                        "${email}",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontFamily: 'NotoSans',
+                                            fontSize: 12,
+                                            color: AppColors.textgreyordersummaary,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ],
+                                  );
+                                },
                               ),
+                            ),
+
+
                               SizedBox(
                                 height: 10,
                               ),
                             ],
                           ),
-                        )
-                      : Container(
+                        ) else Container(
                           // color: Colors.cyan,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children:  [
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                "Guest User",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontFamily: 'NotoSans',
-                                    fontSize: 14,
-                                    color: AppColors.Textcolorheading,
-                                    fontWeight: FontWeight.w700),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          const LoginScreen()));
+                                },
+                                child: Text(
+                                  "Guest User",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontFamily: 'NotoSans',
+                                      fontSize: 14,
+                                      color: AppColors.Textcolorheading,
+                                      fontWeight: FontWeight.w700),
+                                ),
                               ),
                               // Text(
                               //   "de-umair@mobiloitte.com",

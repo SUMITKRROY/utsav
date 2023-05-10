@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:utsav/utils/Shareprefence.dart';
 import 'package:utsav/utils/styles.dart';
 
 import '../../utils/app_color.dart';
@@ -15,6 +17,13 @@ import '../welcome.dart';
  }
 
  class _CreateNewAccountState extends State<CreateNewAccount> {
+   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+   final _firstname = TextEditingController();
+   final _lastname = TextEditingController();
+   final _Email = TextEditingController();
+   TextEditingController _pass= TextEditingController();
+
+
    final formKey = GlobalKey<FormState>();
    bool isChecked = false;
    bool passwordVisible = false;
@@ -102,8 +111,13 @@ import '../welcome.dart';
                                ),
                              ),
                              TextFormField(
+                               onChanged: (value) {
+                                 pass.Firstname = value;
+                               },
+                               controller: TextEditingController(text: pass.Firstname),
+                               autovalidateMode: AutovalidateMode.onUserInteraction,
                                decoration: const InputDecoration(
-                                 hintText: 'First  Name',
+                                 hintText: 'First Name',
                                  hintStyle: Styles.formfieldhintStyle,
                                ),
                                validator: (value) {
@@ -134,6 +148,11 @@ import '../welcome.dart';
                                ),
                              ),
                              TextFormField(
+                               onChanged: (value) {
+                                 pass.lastname = value;
+                               },
+                               controller: TextEditingController(text: pass.lastname),
+                               autovalidateMode: AutovalidateMode.onUserInteraction,
                                decoration: const InputDecoration(
                                  hintText: 'Last Name',
                                  hintStyle: Styles.formfieldhintStyle,
@@ -166,6 +185,10 @@ import '../welcome.dart';
                                ),
                              ),
                              TextFormField(
+                               onChanged: (value) {
+                                 pass.email = value;
+                               },
+                               controller: TextEditingController(text: pass.email),
                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                keyboardType: TextInputType.emailAddress,
                                decoration: const InputDecoration(
@@ -204,9 +227,17 @@ import '../welcome.dart';
                                ),
                              ),
                              TextFormField(
+                               autovalidateMode: AutovalidateMode.onUserInteraction,
                                validator: (value) {
-                                 if (value == null || value.isEmpty) {
-                                   return 'This is a required field.';
+                                 RegExp regex=RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                                 if(value!.isEmpty){
+                                   return ("Password is required.");
+                                 }
+                                 else if(value.length<8){
+                                   return ("Password must be more than 7 characters.");
+                                 }
+                                 else if(!regex.hasMatch(value)){
+                                   return ("Password should contain upper,lower,digit and special character.");
                                  }
                                  return null;
                                },
@@ -269,8 +300,8 @@ import '../welcome.dart';
                                    child: CircleAvatar(
                                      radius: 72.0,
                                      backgroundColor: Colors.transparent,
-                                     backgroundImage: AssetImage(
-                                         'images/socialImg/Facebook.png'),
+                                     backgroundImage:
+                                     AssetImage('assets/Facebook.png'),
                                    ),
                                  ),
                                ),
@@ -297,8 +328,8 @@ import '../welcome.dart';
                                    child: CircleAvatar(
                                      radius: 72.0,
                                      backgroundColor: Colors.transparent,
-                                     backgroundImage: AssetImage(
-                                         'images/socialImg/Google.png'),
+                                     backgroundImage:
+                                     AssetImage('assets/search.png'),
                                    ),
                                  ),
                                ),
@@ -322,17 +353,19 @@ import '../welcome.dart';
                          child: Directionality(
                              textDirection: TextDirection.rtl,
                              child: ElevatedButton.icon(
-                               onPressed: () {
-                                 // (Route<dynamic> route) => false);
-                                 //
+                               onPressed: () async {
+                                // (Route<dynamic> route) => false);
                                  if (formKey.currentState!.validate()) {
                                    Navigator.push(
                                        context,
                                        MaterialPageRoute(
                                            builder: (context) =>
-                                           const dashboardScreen(
-                                               selectedIndex: 0)));
+                                           const LoginScreen()));
                                  }
+                                 SharedPreferences prefs = await SharedPreferences.getInstance();
+                                 await prefs.setString('firstName', pass.Firstname);
+                                 await prefs.setString('lastname', pass.lastname);
+                                 await prefs.setString('email', pass.email);
                                },
                                style: ElevatedButton.styleFrom(
                                  backgroundColor: AppColors.primaryColorpink, // background
@@ -379,6 +412,7 @@ import '../welcome.dart';
                                    MaterialPageRoute(
                                        builder: (context) =>
                                        const LoginScreen()));
+
                                // (Route<dynamic> route) => false);
                                //signup screen
                              },
@@ -395,5 +429,16 @@ import '../welcome.dart';
          ),
        ),
      );
+   }
+
+
+   addStringToSF() async {
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+     prefs.setString('stringValue', "abc");
+   }
+   removeValues() async {
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+     //Remove String
+     prefs.remove("stringValue");
    }
  }

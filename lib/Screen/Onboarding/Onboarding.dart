@@ -29,11 +29,13 @@ class _OnboardingState extends State<Onboarding> {
   var longitude;
 
 
+  CategoriesBloc _CategoriesBloc = CategoriesBloc();
 
   @override
   void initState() {
     countryList();
     getLocation();
+    _CategoriesBloc..add(LoadUserEvent());
     super.initState();
   }
   getLocation() async {
@@ -111,157 +113,148 @@ class _OnboardingState extends State<Onboarding> {
         child: SafeArea(
           child: Scaffold(
             backgroundColor: AppColors.white,
-            body: MultiBlocProvider(
-                providers: [
-                  BlocProvider<CategoriesBloc>(create: (_) => CategoriesBloc()),
-
-                ],
-                child: BlocProvider(
-                  create: (context) => CategoriesBloc()..add(LoadUserEvent()),
-                  child: BlocBuilder<CategoriesBloc, CategoriesState>(
-                      builder: (context, state) {
-                    if (state is CategoriesLoadingState) {
-                      return _loadingIndicator();
-                    }
-                    else if (state is CategoriesLoadedState) {
-                      return Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: ListView(
-                          children: [
-                            SizedBox(
-                              height: height * 0.25,
-                              child: Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 91, right: 20),
-                                    child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: InkWell(
-                                        onTap: () {
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //         const WelcomeScreen()));
-                                        },
-                                        child: Text(
-                                          'Skip',
-                                          style: TextStyle(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            fontFamily: 'SourceSansPro',
-                                            color: AppColors.Textcolorheading,
-                                            fontWeight: FontWeight.w300,
-                                            fontSize: 16,
-                                          ),
-                                        ),
+            body: BlocProvider(
+              create: (context) => _CategoriesBloc,
+              child: BlocBuilder<CategoriesBloc, CategoriesState>(
+                  builder: (context, state) {
+                if (state is CategoriesLoadingState) {
+                  return _loadingIndicator();
+                }
+                else if (state is CategoriesLoadedState) {
+                  return Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: ListView(
+                      children: [
+                        SizedBox(
+                          height: height * 0.25,
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 91, right: 20),
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: InkWell(
+                                    onTap: () {
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) =>
+                                      //         const WelcomeScreen()));
+                                    },
+                                    child: Text(
+                                      'Skip',
+                                      style: TextStyle(
+                                        decoration:
+                                            TextDecoration.underline,
+                                        fontFamily: 'SourceSansPro',
+                                        color: AppColors.Textcolorheading,
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ),
-                                  Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Image.asset(
-                                      'assets/images/SplashScreenLogo.png',
-                                      height: height * 0.30,
-                                      width: width * 0.30,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Image.asset(
-                                "assets/images/500Off.png",
-                                height: height * 0.200,
-                              ),
-                            ),
-                            SizedBox(
-                              height: height * 0.040,
-                            ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Don’t miss out".toUpperCase(),
-                                style: const TextStyle(
-                                    fontFamily: 'NotoSans',
-                                    fontSize: 18,
-                                    color: AppColors.primaryColorpink,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            SizedBox(
-                              height: height * 0.005,
-                            ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Register and start your fashion \n journey to get -",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontFamily: 'SourceSansPro',
-                                    fontSize: 16,
-                                    color: AppColors.Textcolorheading,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding: EdgeInsets.all(12.0),
-                                child: Text(
-                                  "Get extra 500 Off* on your first order when you log in. Offers & updates on fresh Indian fashion trends. Seamless sync of wishlist on all devices. Faster browsing and checkout while you shop. All your orders & status updates in one place..",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontFamily: 'SourceSansPro',
-                                      height: 1.5,
-                                      fontSize: 15,
-                                      color: AppColors.Textcolorheading,
-                                      fontWeight: FontWeight.w400),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: height * 0.060,
-                            ),
-                            InkWell(
-                                child: Container(
-                                  width: width / 2,
-                                  height: height / 12,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: AppColors.bordergrey,
-                                          width: 1),
-                                      shape: BoxShape.circle,
-                                      color: Colors.white),
-                                  child: const Icon(
-                                    Icons.arrow_forward,
-                                    color: AppColors.primaryColorpink,
-                                  ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Image.asset(
+                                  'assets/images/SplashScreenLogo.png',
+                                  height: height * 0.30,
+                                  width: width * 0.30,
                                 ),
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const welcome()));
-                                  // (Route<dynamic> route) => false);
-                                }),
-                          ],
+                              )
+                            ],
+                          ),
                         ),
-                      );
-                    }
-                    else if(state is CategoriesErrorState){
-                      return Text('Connection not found');
-                    }
-                return Container();
-                  }),
-                )
-
-                //),
-
-                ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Image.asset(
+                            "assets/images/500Off.png",
+                            height: height * 0.200,
+                          ),
+                        ),
+                        SizedBox(
+                          height: height * 0.040,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Don’t miss out".toUpperCase(),
+                            style: const TextStyle(
+                                fontFamily: 'NotoSans',
+                                fontSize: 18,
+                                color: AppColors.primaryColorpink,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(
+                          height: height * 0.005,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Register and start your fashion \n journey to get -",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 16,
+                                color: AppColors.Textcolorheading,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: EdgeInsets.all(12.0),
+                            child: Text(
+                              "Get extra 500 Off* on your first order when you log in. Offers & updates on fresh Indian fashion trends. Seamless sync of wishlist on all devices. Faster browsing and checkout while you shop. All your orders & status updates in one place..",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontFamily: 'SourceSansPro',
+                                  height: 1.5,
+                                  fontSize: 15,
+                                  color: AppColors.Textcolorheading,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: height * 0.060,
+                        ),
+                        InkWell(
+                            child: Container(
+                              width: width / 2,
+                              height: height / 12,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: AppColors.bordergrey,
+                                      width: 1),
+                                  shape: BoxShape.circle,
+                                  color: Colors.white),
+                              child: const Icon(
+                                Icons.arrow_forward,
+                                color: AppColors.primaryColorpink,
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const welcome()));
+                              // (Route<dynamic> route) => false);
+                            }),
+                      ],
+                    ),
+                  );
+                }
+                else if(state is CategoriesErrorState){
+                  return Text('Connection not found');
+                }
+            return Container();
+              }),
+            ),
           ),
         ));
   }
