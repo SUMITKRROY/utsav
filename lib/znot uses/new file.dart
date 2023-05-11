@@ -1,38 +1,75 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-class demopage extends StatefulWidget {
-  const demopage({Key? key}) : super(key: key);
-
+class PaymentScreen extends StatefulWidget {
   @override
-  State<demopage> createState() => _demopageState();
+  _PaymentScreenState createState() => _PaymentScreenState();
 }
 
-class _demopageState extends State<demopage> {
+class _PaymentScreenState extends State<PaymentScreen> {
+  final razorpay = Razorpay();
+
+  @override
+  void initState() {
+    super.initState();
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+  }
+
+  void handlePaymentSuccess(PaymentSuccessResponse response) {
+    setState(() {
+      // update UI with payment success status
+    });
+  }
+
+  void handlePaymentError(PaymentFailureResponse response) {
+    setState(() {
+
+    });
+  }
+
+  void handleExternalWallet(ExternalWalletResponse response) {
+    // handle external wallet response
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    razorpay.clear();
+  }
+
+  void startPayment() {
+    final options = {
+      'key': '<your-key-id>',
+      'amount': 1000, // amount in paisa
+      'name': 'Acme Corp.',
+      'description': 'Test payment',
+      'prefill': {'contact': '9876543210', 'email': 'john.doe@example.com'},
+    };
+
+    razorpay.open(options);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  FutureBuilder<SharedPreferences>(
-      future: SharedPreferences.getInstance(),
-      builder: (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
-        if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-        SharedPreferences prefs = snapshot.data!;
-        String firstName = prefs.getString('firstName') ?? '';
-        String lastName = prefs.getString('lastName') ?? '';
-        String email = prefs.getString('email') ?? '';
-
-        return Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Payment Screen'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('First Name: $firstName'),
-            Text('Last Name: $lastName'),
-            Text('Email: $email'),
+            Text('Total Amount: \$10.00'),
+            SizedBox(height: 16.0),
+            TextButton(
+              child: Text('Pay Now'),
+              onPressed: startPayment,
+            ),
           ],
-        );
-      },
+        ),
+      ),
     );
   }
 }

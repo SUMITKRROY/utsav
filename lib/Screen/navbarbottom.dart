@@ -30,7 +30,8 @@ class _dashboardScreenState extends State<dashboardScreen> {
   final ScreenList = [
     const HomePage(),
      mixlandingpage( ),
-    const Page3(),
+   // const Page3(),
+    PaymentScreen(),
     const Page4(),
   ];
 
@@ -276,7 +277,9 @@ class _firstdrawerState extends State<firstdrawer> {
                                     ),
                                     TextButton(
                                       child: const Text('Log out'),
-                                      onPressed: () {
+                                      onPressed: () async {
+                                        // SharedPreferences prefs = await SharedPreferences.getInstance();
+                                        // await prefs.clear();
                                         Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
                                       },
                                     ),
@@ -294,7 +297,7 @@ class _firstdrawerState extends State<firstdrawer> {
                                   return Column(
                                     children: [
                                       Text(
-                                        '${firstName} ${lastName}',
+                                        "${(firstName)} ${(lastName)}",
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                             fontFamily: 'NotoSans',

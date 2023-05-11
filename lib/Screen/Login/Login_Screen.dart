@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:utsav/Screen/Login/recoverPassword.dart';
+import 'package:utsav/utils/Shareprefence.dart';
 
 import '../../utils/Utils.dart';
 import '../../utils/app_color.dart';
@@ -19,12 +21,19 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   bool passwordVisible = false;
+  final _Email = TextEditingController();
+  TextEditingController _password= TextEditingController();
 
   @override
   void initState() {
     super.initState();
     passwordVisible = true;
   }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   removeValues();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -81,100 +90,116 @@ class _LoginScreenState extends State<LoginScreen> {
                     key: formKey,
                     child: Column(
                       children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Row(
-                            children: [
-                              Text(
-                                "Email Address",
-                                style: Styles.formfieldHeadingText,
-                              ),
-                              Text(
-                                "*",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: height * 0.010,
-                        ),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            hintText: 'Example@gmail.com',
-                            hintStyle: Styles.formfieldhintStyle,
-                          ),
-                          validator: (value) {
-                            RegExp regex=RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                            if(value!.isEmpty){
-                              return ("Email is required");
-                            }
-                            else if(!regex.hasMatch(value)){
-                              return ("Invalid email address");
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: height * 0.020,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Row(
-                            children: [
-                              Text(
-                                "Password",
-                                style: Styles.formfieldHeadingText,
-                              ),
-                              Text(
-                                "*",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: height * 0.010,
-                        ),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          inputFormatters: <TextInputFormatter>[
-                            LengthLimitingTextInputFormatter(10),
-                            // FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+'))
-                          ],
-                          keyboardType: TextInputType.text,
-                          obscureText: passwordVisible,
-                          decoration: InputDecoration(
-                            hintText: 'XXXXXXXXXXX',
-                            hintStyle: Styles.formfieldhintStyle,
-                            suffixIcon: IconButton(
-                              color: Colors.grey,
-                              icon: Icon(passwordVisible
-                                  ? Icons.visibility_off
-                                  : Icons.visibility),
-                              onPressed: () {
-                                setState(
-                                      () {
-                                    passwordVisible = !passwordVisible;
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Invalid password.';
-                            }
+                        FutureBuilder<SharedPreferences>(
+                          future: SharedPreferences.getInstance(),
+                          builder: (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
+                            SharedPreferences prefs = snapshot.data!;
+                            String firstName = prefs.getString('firstName') ?? '';
+                            String lastName = prefs.getString('lastName') ?? '';
+                            String password = prefs.getString('password') ?? '';
+                            String email = prefs.getString('email') ?? '';
+                            return Column(
+                              children: [
 
-                            return null;
-                          },
-                       /*   validator: (value) {
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Email Address",
+                                        style: Styles.formfieldHeadingText,
+                                      ),
+                                      Text(
+                                        "*",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: height * 0.010,
+                                ),
+                                TextFormField(
+                                  controller: _Email,
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  keyboardType: TextInputType.emailAddress,
+                                  decoration: InputDecoration(
+                                    hintText: 'Example@gmail.com',
+                                    hintStyle: Styles.formfieldhintStyle,
+                                  ),
+                                  validator: (value) {
+                                    RegExp regex=RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                                    if(value!.isEmpty){
+                                      return ("Email is required");
+                                    }
+                                    else if(!regex.hasMatch(value)){
+                                      return ("Invalid email address");
+                                    }  else if (email != null && value != email) {
+                                      return 'Please enter the correct email address';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(
+                                  height: height * 0.020,
+                                ),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Password",
+                                        style: Styles.formfieldHeadingText,
+                                      ),
+                                      Text(
+                                        "*",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: height * 0.010,
+                                ),
+                                TextFormField(
+                                  controller: _password,
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  inputFormatters: <TextInputFormatter>[
+                                    LengthLimitingTextInputFormatter(10),
+                                    // FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+'))
+                                  ],
+                                  keyboardType: TextInputType.text,
+                                  obscureText: passwordVisible,
+                                  decoration: InputDecoration(
+                                    hintText: 'XXXXXXXXXXX',
+                                    hintStyle: Styles.formfieldhintStyle,
+                                    suffixIcon: IconButton(
+                                      color: Colors.grey,
+                                      icon: Icon(passwordVisible
+                                          ? Icons.visibility_off
+                                          : Icons.visibility),
+                                      onPressed: () {
+                                        setState(
+                                              () {
+                                            passwordVisible = !passwordVisible;
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Invalid password.';
+                                    } else if (password != null && value != password) {
+                                      return 'Please enter the correct password';
+                                    }
+                                    return null;
+                                  },
+                                  /*   validator: (value) {
                             RegExp regex=RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
                             if(value!.isEmpty){
                               return ("Password is required");
@@ -187,7 +212,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                             return null;
                           },*/
+                                ),
+                              ],
+                            );
+                          },
                         ),
+
                       ],
                     ),
                   ),
@@ -286,7 +316,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: AppColors.primaryColorpink, // background
+                            backgroundColor: AppColors.primaryColorpink, // background
                           ),
                           icon: const Icon(
                             Icons.arrow_back,
@@ -388,4 +418,10 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
   }
+  // removeValues() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   //Remove String
+  //   prefs.remove(pass.email);
+  //   prefs.remove(pass.password);
+  // }
 }

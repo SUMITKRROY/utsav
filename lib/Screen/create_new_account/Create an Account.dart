@@ -227,6 +227,10 @@ import '../welcome.dart';
                                ),
                              ),
                              TextFormField(
+                               onChanged: (value) {
+                                 pass.password = value;
+                               },
+                               controller: TextEditingController(text: pass.password),
                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                validator: (value) {
                                  RegExp regex=RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
@@ -309,8 +313,7 @@ import '../welcome.dart';
                                  Navigator.push(
                                      context,
                                      MaterialPageRoute(
-                                         builder: (context) =>
-                                         const welcome()));
+                                         builder: (context) => const welcome()));
                                }),
                            const SizedBox(
                              width: 25,
@@ -366,6 +369,7 @@ import '../welcome.dart';
                                  await prefs.setString('firstName', pass.Firstname);
                                  await prefs.setString('lastname', pass.lastname);
                                  await prefs.setString('email', pass.email);
+                                 await prefs.setString('password', pass.password);
                                },
                                style: ElevatedButton.styleFrom(
                                  backgroundColor: AppColors.primaryColorpink, // background

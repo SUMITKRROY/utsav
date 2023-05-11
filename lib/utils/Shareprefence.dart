@@ -2,6 +2,7 @@ class pass {
   static String Username = "";
   static String Firstname =" ";
   static String lastname ="";
+  static String password ="";
   static String gender ="";
   static String Documents ="";
   static String KycDocuments ="";
