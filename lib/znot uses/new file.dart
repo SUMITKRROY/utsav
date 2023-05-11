@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -19,18 +20,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   void handlePaymentSuccess(PaymentSuccessResponse response) {
     setState(() {
-      // update UI with payment success status
+      Fluttertoast.showToast(
+          msg: "SUCCESS: " + response.paymentId!, timeInSecForIosWeb: 4);
     });
   }
 
   void handlePaymentError(PaymentFailureResponse response) {
     setState(() {
-
+      Fluttertoast.showToast(
+          msg: "ERROR: " + response.code.toString() + " - " + response.message!,
+          timeInSecForIosWeb: 4);
     });
   }
 
   void handleExternalWallet(ExternalWalletResponse response) {
-    // handle external wallet response
+    Fluttertoast.showToast(
+        msg: "EXTERNAL_WALLET: " + response.walletName!, timeInSecForIosWeb: 4);
   }
 
   @override
@@ -41,14 +46,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   void startPayment() {
     final options = {
-      'key': '<your-key-id>',
+      'key': 'rzp_test_A9vIQElA3Cv9O7',
       'amount': 1000, // amount in paisa
-      'name': 'Acme Corp.',
+      'name': 'sumit',
       'description': 'Test payment',
       'prefill': {'contact': '9876543210', 'email': 'john.doe@example.com'},
     };
 
-    razorpay.open(options);
+    try {
+      razorpay!.open(options);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   @override
@@ -61,7 +70,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Total Amount: \$10.00'),
+            Text('Total Amount: \$1000.00'),
             SizedBox(height: 16.0),
             TextButton(
               child: Text('Pay Now'),
