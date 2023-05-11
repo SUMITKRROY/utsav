@@ -833,9 +833,16 @@ class Widgets{
   );
   static ksizedBox5(context) => SizedBox(
     height:  5,
+
   );
 
-
+  static kheadinghome(context, heading) => Align(
+    alignment: Alignment.centerLeft,
+    child: Text(
+      heading,
+      style: Styles.khomeheadingStyle,
+    ),
+  );
 
 
 
@@ -1324,4 +1331,40 @@ class Widgets{
       timer = null;
     });*/
   }
+}
+class Constants {
+  Constants._();
+
+  static const login = "Login";
+  static const forgot_password = "Forgot\nPassword";
+  static const demo_mail =
+      "Dear John Smith\n\nThank you for visiting AVK company during the above trade show in Germany.\n\nYou have shown interest in the following producyts:\n\nCommercial products\nDomestic products\n\nYou can read, download and view all\nproduct information according to the below links:";
+  static const sub_heading_forgot_password =
+      "Enter your email and we'll send you a one time password by email";
+  static const error_login_credentials = "Username or password is incorrect";
+
+  //edittext labels
+  static const email = "Email";
+  static const password = "Password";
+  static const confirm_password = "Confirm Password";
+  static const search = "Search";
+
+  //edit text hints
+  static const enterEmail = "Enter email";
+  static const enterPassword = "Enter password";
+  static const enterConfirmPassword = "Enter confirm password";
+  static const searchHint = "search";
+  static const name = "Name";
+  static const title = "Title";
+  static const phone = "Phone";
+  static const address = "Address";
+  static const zipcode = "zipcode";
+  static const City = "City";
+  static const company = "Company";
+  static const country = "Country";
+  static const Website = "Website";
+  static const Permissiondate = "Permission date";
+  static const Pleaseentervalidname = "Please enter a valid name";
+  static const PleaseentervalidEmail = "Please enter a valid email address";
+  static const Pleaseentervalidoption = "Please select an option";
 }

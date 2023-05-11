@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:utsav/utils/Shareprefence.dart';
 import 'package:utsav/utils/styles.dart';
@@ -111,6 +112,9 @@ import '../welcome.dart';
                                ),
                              ),
                              TextFormField(
+                               inputFormatters: [
+                                 LengthLimitingTextInputFormatter(20),
+                               ],
                                onChanged: (value) {
                                  pass.Firstname = value;
                                },
@@ -148,6 +152,9 @@ import '../welcome.dart';
                                ),
                              ),
                              TextFormField(
+                               inputFormatters: [
+                                 LengthLimitingTextInputFormatter(20),
+                               ],
                                onChanged: (value) {
                                  pass.lastname = value;
                                },
@@ -227,6 +234,9 @@ import '../welcome.dart';
                                ),
                              ),
                              TextFormField(
+                               inputFormatters: [
+                                 LengthLimitingTextInputFormatter(20),
+                               ],
                                onChanged: (value) {
                                  pass.password = value;
                                },

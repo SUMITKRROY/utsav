@@ -174,4 +174,65 @@ class Styles {
       fontWeight: FontWeight.w400
     // fontWeight: FontWeight.bold
   );
+
+  static const assetstypeStyle = TextStyle(
+    color: Colors.black,
+    fontSize: 16,
+    fontFamily: "SourceSansPro",
+    fontWeight: FontWeight.w500,
+  );
+
+  static const shareWishStyle = TextStyle(
+      fontFamily: 'NotoSans',
+      fontSize: 18,
+      color: AppColors.buttongrey,
+      fontWeight: FontWeight.w700);
+  static const shareItStyle = TextStyle(
+    fontFamily: 'SourceSansPro',
+    color: AppColors.Textcolorheadingblack,
+    fontWeight: FontWeight.w400,
+    fontSize: 15,
+  );
+
+  static const shipintilesStyle = TextStyle(
+    fontFamily: 'SourceSansPro',
+    color: AppColors.Textcolorheading,
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+  );
+  static const khomeheadingStyle = TextStyle(
+      fontFamily: 'SourceSansPro',
+      fontSize: 21,
+      color: AppColors.Textcolorheadingblack,
+      fontWeight: FontWeight.w600);
+
+  static const khomesubheadingStyle = TextStyle(
+      fontFamily: 'SourceSansPro',
+      fontSize: 15,
+      color: AppColors.Textcolorheadingblack,
+      fontWeight: FontWeight.w400);
+  static const Sizechartunder = TextStyle(
+      decoration: TextDecoration.underline,
+      fontFamily: 'SourceSansPro',
+      fontSize: 15,
+      color: AppColors.Textcolorheadingblack,
+      fontWeight: FontWeight.w400);
+  static const subheadingStyle = TextStyle(
+      fontFamily: 'SourceSansPro',
+      fontSize: 14,
+      color:  AppColors.bulletcolor,
+      fontWeight: FontWeight.w400);
+  //
+  static const ksearchheadingStyle = TextStyle(
+      fontFamily: 'SourceSansPro',
+      fontSize: 16,
+      color: Colors.black,
+      fontWeight: FontWeight.w600
+    // fontWeight: FontWeight.bold
+  );
+
+  static const TextStyle requiredFieldTextStyle = TextStyle(
+    color: Color(0xFFCB4551),
+    fontSize: 12,
+  );
 }
