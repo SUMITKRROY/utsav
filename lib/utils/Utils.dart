@@ -833,7 +833,6 @@ class Widgets{
   );
   static ksizedBox5(context) => SizedBox(
     height:  5,
-
   );
 
   static kheadinghome(context, heading) => Align(

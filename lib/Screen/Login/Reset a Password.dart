@@ -106,7 +106,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                           validator: (value) {
                             RegExp regex=RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
                             if(value!.isEmpty){
-                              return ("Password is required.");
+                               return ("Password is required.");
                             }
                             else if(value.length<8){
                               return ("Password must be more than 7 characters.");

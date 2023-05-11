@@ -212,7 +212,7 @@ class _welcomeState extends State<welcome> {
                       ),
                     ),
                     onTap: () {
-                      Utils.checkLogin=true;
+                       Utils.checkLogin=true;
                       Navigator.push(
                           context,
                           MaterialPageRoute(

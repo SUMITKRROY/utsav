@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     else if(!regex.hasMatch(value)){
                                       return ("Invalid email address");
                                     }  else if (email != null && value != email) {
-                                      return 'Please enter the correct email address';
+                                       return 'Please enter the correct email address';
                                     }
                                     return null;
                                   },

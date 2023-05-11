@@ -173,7 +173,7 @@ class _HelpScreenState extends State<HelpScreen> {
                               style: Styles.formfieldHeadingText,
                             ),
                           ],
-                        ),
+                         ),
                       ),
                       TextFormField(
                         inputFormatters: [

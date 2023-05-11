@@ -353,7 +353,6 @@ class _HomePageState extends State<HomePage> {
                       context, "READY-TO-SHIP COLLECTION"),
                 ),
               ),
-
               // images/bannerImg/rom.png
               SizedBox(
                 height: height * 0.010,
