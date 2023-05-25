@@ -29,7 +29,7 @@ class _dashboardScreenState extends State<dashboardScreen> {
  PostsService repository =PostsService();
   final ScreenList = [
     const HomePage(),
-     mixlandingpage( ),
+     mixlandingpage(),
    // const Page3(),
     PaymentScreen(),
     const Page4(),

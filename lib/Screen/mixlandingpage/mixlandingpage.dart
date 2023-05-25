@@ -764,7 +764,7 @@ class _mixlandingpageState extends State<mixlandingpage> {
               ),
             ],
           ),*/
-          // body: bottomNavigationBar,
+
           body: BlocBuilder<MixLandingPageBloc, MixLandingPageState>(
             builder: (context, state) {
               if (state is UserLoadingState && state.isFirstFetch) {

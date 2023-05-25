@@ -7,6 +7,8 @@ import 'package:utsav/utils/widgets.dart';
 import '../utils/Utils.dart';
 import '../utils/app_color.dart';
 import '../utils/styles.dart';
+import '../znot uses/newformate.dart';
+import '../znot uses/test.dart';
 import 'create_new_account/Create an Account.dart';
 import 'help_screen.dart';
 
@@ -172,16 +174,11 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ),
                                           onTap: () {
-                                         /*   Navigator.push(
+                                           Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        MixCategoryLandigPage(
-                                                          heding:
-                                                          "This Week's Best Sellers",
-                                                          mapdata: _hidengemMap,
-                                                          imglist: [],
-                                                        )));*/
+                                                        SareesPage()                                                        ));
                                           },
                                         ),
                                         const SizedBox(width: 5),
@@ -345,6 +342,7 @@ class _HomePageState extends State<HomePage> {
                 height: height * 0.020,
               ),
 
+              ///
               ///READY-TO-SHIP COLLECTION
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
